@@ -1,0 +1,65 @@
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+react {
+    autolinkLibrariesWithApp()
+}
+
+def enableProguardInReleaseBuilds = false
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+
+    namespace "com.funmapapp"
+    defaultConfig {
+        applicationId "com.funmapapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 22
+        versionName "22.0"
+         ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(project.hasProperty('MYAPP_RELEASE_STORE_FILE') ? project.MYAPP_RELEASE_STORE_FILE : 'android/app/my-release-key.jks')
+            storePassword project.hasProperty('MYAPP_RELEASE_STORE_PASSWORD') ? project.MYAPP_RELEASE_STORE_PASSWORD : ''
+            keyAlias project.hasProperty('MYAPP_RELEASE_KEY_ALIAS') ? project.MYAPP_RELEASE_KEY_ALIAS : ''
+            keyPassword project.hasProperty('MYAPP_RELEASE_KEY_PASSWORD') ? project.MYAPP_RELEASE_KEY_PASSWORD : ''
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.contains("externalNativeBuild")) {
+        task.enabled = false
+    }
+}
+
+
+dependencies {
+    implementation("com.facebook.react:react-android")
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+}
