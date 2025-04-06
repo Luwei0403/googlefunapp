@@ -1,10 +1,10 @@
 # 探遊台灣：文化景點地圖導覽
 
-🗺️ 一款使用 React Native 開發的 App，帶你探索台灣各地的文化景點與導覽資訊！  
-📍 使用 Google Map 標記位置，並依地區分類瀏覽景點，支援收藏我的最愛。
+一款使用 React Native 開發的 App，帶你探索台灣各地的文化景點與導覽資訊！  
+使用 Google Map 標記位置，並依地區分類瀏覽景點，支援收藏我的最愛。
 ---
 
-## 🔧 技術棧（Tech Stack）
+##  技術棧（Tech Stack）
 
 - **React Native 0.78.0**
 - **Redux Toolkit + Redux Persist**
@@ -16,7 +16,7 @@
 
 ---
 
-## 🚀 功能特色
+##  功能特色
 
 - 🎯 台灣文化景點互動式地圖顯示（整合 Google Maps）
 - 📂 地區篩選（北、中、南、東、離島）
